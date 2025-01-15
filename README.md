@@ -38,16 +38,23 @@ TODO
 
 Installing dependencies
 ```sh
-module load Python/3.10.4 CUDA/12.0.0 cuDNN/8.8.0.121-CUDA-12.0.0
-python -m venv $SCRATCH/tadeusz
-source $SCRATCH/tadeusz/bin/activate
-python -m pip install --no-cache-dir torch==2.1.1 torchvision torchaudio numpy transformers datasets tiktoken wandb tqdm jupyter
+module load Python/3.10.4 CUDA/12.1.1 cuDNN/8.8.0.121-CUDA-12.0.0
+python -m venv $SCRATCH/gpt
+source $SCRATCH/gpt/bin/activate
+pip install -r requirements.txt
+export LD_LIBRARY_PATH=`python -m site --user-site`/nvidia/nvjitlink/lib:$LD_LIBRARY_PATH
 ```
 
 Training
 ```sh
-srun --time=12:00:00 --mem=32G --ntasks 1 --gres=gpu:1 --partition=plgrid-gpu-a100 --account=$PLG_ACCOUNT --pty /bin/bash
-module load Python/3.10.4 CUDA/12.0.0 cuDNN/8.8.0.121-CUDA-12.0.0
-source $SCRATCH/tadeusz/bin/activate
+srun --time=2:00:00 --mem=32G --ntasks 1 --gres=gpu:1 --partition=plgrid-gpu-a100 --account=$PLG_ACCOUNT --pty /bin/bash
+module load Python/3.10.4 CUDA/12.1.1 cuDNN/8.8.0.121-CUDA-12.0.0
+export LD_LIBRARY_PATH=`python -m site --user-site`/nvidia/nvjitlink/lib:$LD_LIBRARY_PATH
+source $SCRATCH/gpt/bin/activate
 python train.py config/train_pan_tadeusz_char.py
+```
+
+Sampling
+```sh
+python sample.py --out_dir=out-pan-tadeusz-char
 ```
