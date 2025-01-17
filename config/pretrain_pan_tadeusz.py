@@ -1,4 +1,5 @@
 # train a character-level model on polish literature
+import time
 
 out_dir = 'out-pan-tadeusz'
 eval_interval = 500 
@@ -9,7 +10,7 @@ always_save_checkpoint = True
 
 wandb_log = True 
 wandb_project = 'pan-tadeusz-pretrain'
-wandb_run_name = 'mini-gpt'
+wandb_run_name = 'mickiewiczGPT-' + str(time.time())
 
 dataset = 'polish_literature'
 gradient_accumulation_steps = 1

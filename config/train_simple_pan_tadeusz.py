@@ -1,4 +1,5 @@
 # train a miniature character-level model on "Pan Tadeusz"
+import time
 
 out_dir = 'out-pan-tadeusz-simple'
 eval_interval = 250 # keep frequent because we'll overfit
@@ -10,7 +11,7 @@ always_save_checkpoint = False
 
 wandb_log = False # override via command line if you like
 wandb_project = 'pan-tadeusz-simple'
-wandb_run_name = 'mini-gpt'
+wandb_run_name = 'mickiewiczGPT-' + str(time.time())
 
 dataset = 'pan_tadeusz'
 gradient_accumulation_steps = 1
